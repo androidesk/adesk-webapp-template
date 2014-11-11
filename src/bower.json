@@ -1,0 +1,22 @@
+{
+  "name": "adesk-webapp-template",
+  "version": "1.0.0",
+  "authors": [
+    "zhyq0826"
+  ],
+  "description": "androidesk webapp template",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "bootstrap": "~3.3.0",
+    "ember": "~1.8.1"
+  }
+}
