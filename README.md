@@ -32,7 +32,7 @@ adesk-webapp-template
         ├── bower.json           // bower 包管理的配置文件
         ├── css                  // less 源文件 
         ├── Gruntfile.js         // gruntjs 配置文件
-        ├── js
+        ├── js                   // js 源文件
         ├── node_modules         // gruntjs 的 npm 包,由 gruntjs 自动生成
         └── package.json         // gruntjs 的说明文件
 
