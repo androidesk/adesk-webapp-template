@@ -11,10 +11,14 @@ module.exports = function(grunt) {
       dist: {
         // the file to concatenate
         src: [
-            'js/*.js'
+          'js/*.js'
         ],
         // the location of the resulting js file
         dest: '../js/<%= pkg.name %>.js'
+      },
+      app: {
+        src: ['js/app/**/*.js'],
+        dest: '../js/app.js'
       }
     },
     uglify: {
@@ -28,11 +32,10 @@ module.exports = function(grunt) {
         }
       }
     },
-    qunit: {},
     jshint: {
       all: [
-          'Gruntfile.js',
-          'js/*.js'
+        'Gruntfile.js',
+        'js/*.js'
       ],
       options: {
         asi: true,
@@ -70,33 +73,52 @@ module.exports = function(grunt) {
         options: {
           event: ['changed']
         }
+      },
+      emberApp: {
+        files: 'js/app/**/*.js',
+        tasks: ['concat']
+      },
+      emberTemplates: {
+        files: 'js/app/templates/**/*.hbs',
+        tasks: ['emberTemplates']
       }
     },
     bower: {
       install: {
         options: {
-            targetDir: '../lib',
-            layout: 'byType',
-            install: false,
-            verbose: false,
-            cleanTargetDir:false,
-            cleanBowerDir:false,
-            bowerOptions: {
-                }
-            }
+          targetDir: '../lib',
+          layout: 'byType',
+          install: false,
+          verbose: false,
+          cleanTargetDir: false,
+          cleanBowerDir: false,
+          bowerOptions: {}
         }
+      }
+    },
+    emberTemplates: {
+      compile: {
+        options: {
+          concatenate: true,
+          precompile: true,
+          templateBasePath: /js\/app\/templates\//
+        },
+        files: {
+          '../js/template.js': 'js/app/templates/**/*.hbs'
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-ember-templates');
 
   //grunt.registerTask('test', ['jshint', 'qunit']);
   //grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-  grunt.registerTask('default', ['concat', 'uglify', 'less', 'jshint','bower'])
+  grunt.registerTask('default', ['concat', 'emberTemplates', 'uglify', 'less', 'jshint', 'bower'])
 }
