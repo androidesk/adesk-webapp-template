@@ -1,4 +1,7 @@
 module.exports = function(grunt) {
+
+  var path = require('path');
+
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
     meta: {
@@ -55,7 +58,8 @@ module.exports = function(grunt) {
           yuicompress: true
         },
         files: {
-          "../css/<%= pkg.name %>.css": "css/base.less"
+          "../css/<%= pkg.name %>.css": "css/base.less",
+          "../css/sb-admin-2.css": "css/sb-admin-2/sb-admin-2.less"
         }
       }
     },
@@ -87,12 +91,24 @@ module.exports = function(grunt) {
       install: {
         options: {
           targetDir: '../lib',
-          layout: 'byType',
+          layout: function(type, byComponent, source){
+            //bower task layout:byComponet don't work hack like this
+            var source_list = source.split('/');
+            var real_path = []
+            if(source_list[2]==='dist'){
+              real_path = source_list.slice(3, -1).join('/')
+            }else {
+              real_path = source_list.slice(2, -1).join('/')
+            }
+            return path.join(byComponent, real_path);
+          },
           install: false,
           verbose: false,
           cleanTargetDir: false,
           cleanBowerDir: false,
-          bowerOptions: {}
+          bowerOptions: {
+
+          }
         }
       }
     },
