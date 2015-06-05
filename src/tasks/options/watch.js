@@ -1,6 +1,6 @@
 module.exports = {
     css: {
-        files: 'css/*.less',
+        files: 'css/**/*.less',
         tasks: ['less'],
         options: {
             event: ['changed']
